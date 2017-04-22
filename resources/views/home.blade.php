@@ -12,4 +12,9 @@
 <p>
     <a class="btn btn-default" href="{{ route('boat.create') }}">Create</a>
 </p>
+<p>Reservation Slots Management:</p>
+<p>
+    <a class="btn btn-default" href="{{ route('reservation_slots.make.show') }}">Make Slots</a>
+    <a class="btn btn-default" href="{{ route('reservation_slots.index') }}">View Slots</a>
+</p>
 @endsection

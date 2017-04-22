@@ -18,6 +18,10 @@
                             <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" />
                         </div>
                         <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="text" class="form-control" id="dob" name="dob" placeholder="Date of Birth" />
+                        </div>
+                        <div class="form-group">
                             <label for="phone">Phone Number</label>
                             <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone Number" />
                         </div>

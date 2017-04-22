@@ -27,6 +27,7 @@ class CustomerController extends Controller
 
         $customer->first_name = $request->input('first_name');
         $customer->last_name = $request->input('last_name');
+        $customer->dob = $request->input('dob');
         $customer->phone = $request->input('phone');
         $customer->home_street = $request->input('home_street');
         $customer->home_city = $request->input('home_city');

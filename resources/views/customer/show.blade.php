@@ -11,6 +11,7 @@
                     <ul>
                         <li><strong>First Name:</strong> {{ $customer->first_name }}</li>
                         <li><strong>Last Name:</strong> {{ $customer->last_name }}</li>
+                        <li><strong>Date of Birth:</strong> {{ $customer->dob }}</li>
                         <li><strong>Phone Number:</strong> {{ $customer->phone }}</li>
                         <li><strong>Home Street:</strong> {{ $customer->home_street }}</li>
                         <li><strong>Home City:</strong> {{ $customer->home_city }}</li>

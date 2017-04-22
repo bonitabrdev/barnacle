@@ -8,4 +8,8 @@
 <p>
     <a class="btn btn-default" href="{{ route('customer.create') }}">Create</a>
 </p>
+<p>Boat Management:</p>
+<p>
+    <a class="btn btn-default" href="{{ route('boat.create') }}">Create</a>
+</p>
 @endsection

@@ -25,3 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/customers/create', 'CustomerController@create')->name('customer.create');
 Route::post('/customers', 'CustomerController@store')->name('customer.store');
 Route::get('/customers/{id}', 'CustomerController@show')->name('customer.show');
+
+Route::get('/boats/create', 'BoatController@create')->name('boat.create');
+Route::post('/boats', 'BoatController@store')->name('boat.store');
+Route::get('/boats/{id}', 'BoatController@show')->name('boat.show');

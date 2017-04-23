@@ -30,6 +30,7 @@ Route::get('/customers', 'CustomerController@index')->name('customer.index');
 Route::get('/boats/create', 'BoatController@create')->name('boat.create');
 Route::post('/boats', 'BoatController@store')->name('boat.store');
 Route::get('/boats/{id}', 'BoatController@show')->name('boat.show');
+Route::get('/boats', 'BoatController@index')->name('boat.index');
 
 Route::get('/reservation_slots/make', 'ReservationSlotsController@showMakeSlotsForDay')->name('reservation_slots.make.show');
 Route::post('/reservation_slots/make', 'ReservationSlotsController@doMakeSlotsForDay')->name('reservation_slots.make.do');

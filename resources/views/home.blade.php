@@ -12,6 +12,7 @@
 <p>Boat Management:</p>
 <p>
     <a class="btn btn-default" href="{{ route('boat.create') }}">Create</a>
+    <a class="btn btn-default" href="{{ route('boat.index') }}">View All</a>
 </p>
 <p>Reservation Slots Management:</p>
 <p>

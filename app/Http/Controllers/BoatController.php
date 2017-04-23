@@ -45,4 +45,11 @@ class BoatController extends Controller
 
         return view('boat.show')->with('boat', $boat);
     }
+
+    public function index(Request $request)
+    {
+        $boats = Boat::all();
+
+        return view('boat.index')->with('boats', $boats);
+    }
 }

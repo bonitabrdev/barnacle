@@ -7,6 +7,7 @@
 <p>Cutomer Management:</p>
 <p>
     <a class="btn btn-default" href="{{ route('customer.create') }}">Create</a>
+    <a class="btn btn-default" href="{{ route('customer.index') }}">View All</a>
 </p>
 <p>Boat Management:</p>
 <p>

@@ -20,7 +20,7 @@ class ReservationController extends Controller
 
     public function create(Request $request)
     {
-        return redirect()->route('home');
+        return view('reservation.create');
     }
 
     public function store(Request $request)

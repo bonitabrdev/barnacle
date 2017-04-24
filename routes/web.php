@@ -38,6 +38,7 @@ Route::get('/reservation_slots/make', 'ReservationSlotsController@showMakeSlotsF
 Route::post('/reservation_slots/make', 'ReservationSlotsController@doMakeSlotsForDay')->name('reservation_slots.make.do');
 Route::get('/reservation_slots/{year}/{month}/{day}', 'ReservationSlotsController@showSlotsForDay')->name('reservation_slots.showforday');
 Route::get('/reservation_slots', 'ReservationSlotsController@index')->name('reservation_slots.index');
+Route::get('/reservation_slots/json/date/{year}/{month}/{day}', 'ReservationSlotsController@jsonSlotsForDay');
 
 Route::get('/reservations', 'ReservationController@index')->name('reservation.index');
 Route::get('/reservations/create', 'ReservationController@create')->name('reservation.create');

@@ -86,4 +86,39 @@ class ReservationSlotsController extends Controller
 
         return view('reservation_slots.index')->with('slot_dates', $slot_dates);
     }
+
+    public function jsonSlotsForDay(Request $request, $year, $month, $day)
+    {
+        $dt = Carbon::create($year, $month, $day);
+        $slots = ReservationSlot::where('reservation_date', $dt->toDateString())->get();
+        $boats = Boat::all();
+        $result = [
+            'date' => $dt->toDateString(),
+            'boats' => []
+        ];
+
+        foreach ($boats as $boat) {
+            $result_slots = [];
+
+            $filtered_slots = $slots->where('boat_id', $boat->id)->sortBy('start_time');
+            foreach ($filtered_slots as $slot) {
+                $result_slots[] = [
+                    'slot_id' => $slot->id,
+                    'reservation_id' => $slot->reservation_id,
+                    'available' => $slot->available,
+                    'start_time' => $slot->start_time,
+                    'end_time' => $slot->end_time
+                ];
+            }
+
+            $result['boats'][] = [
+                'boat_id' => $boat->id,
+                'boat_name' => $boat->name,
+                'boat_type' => $boat->type,
+                'slots' => $result_slots
+            ];
+        }
+
+        return response()->json($result);
+    }
 }

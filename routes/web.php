@@ -38,3 +38,11 @@ Route::get('/reservation_slots/make', 'ReservationSlotsController@showMakeSlotsF
 Route::post('/reservation_slots/make', 'ReservationSlotsController@doMakeSlotsForDay')->name('reservation_slots.make.do');
 Route::get('/reservation_slots/{year}/{month}/{day}', 'ReservationSlotsController@showSlotsForDay')->name('reservation_slots.showforday');
 Route::get('/reservation_slots', 'ReservationSlotsController@index')->name('reservation_slots.index');
+
+Route::get('/reservations', 'ReservationController@index')->name('reservation.index');
+Route::get('/reservations/create', 'ReservationController@create')->name('reservation.create');
+Route::post('/reservations', 'ReservationController@store')->name('reservation.store');
+Route::get('/reservations/{id}', 'ReservationController@show')->name('reservation.show');
+Route::put('/reservations/{id}', 'ReservationController@update')->name('reservation.update');
+Route::get('/reservations/date/{year}/{month}/{day}', 'ReservationController@showByDate')->name('reservations.showbydate');
+Route::get('/reservations/{id}/edit', 'ReservationController@edit')->name('reservations.edit');

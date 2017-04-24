@@ -83,5 +83,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <!-- footer_scripts stack -->
+    @stack('footer_scripts')
 </body>
 </html>

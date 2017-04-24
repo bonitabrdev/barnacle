@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 
@@ -74,6 +75,15 @@ class ReservationSlotsController extends Controller
 
     public function index(Request $request)
     {
-        return redirect()->route('home');
+        $slot_dates_results = DB::table('reservation_slots')
+            ->select('reservation_date')
+            ->distinct()
+            ->get();
+        $slot_dates = [];
+        foreach ($slot_dates_results as $slot_date_result) {
+            $slot_dates[] = Carbon::parse($slot_date_result->reservation_date);
+        }
+
+        return view('reservation_slots.index')->with('slot_dates', $slot_dates);
     }
 }

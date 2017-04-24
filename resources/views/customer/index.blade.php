@@ -22,6 +22,7 @@
                 <td>{{ $customer->phone }}</td>
                 <td>
                     <a class="btn btn-default" href="{{ route('customer.show', ['id' => $customer->id]) }}">View</a>
+                    <a class="btn btn-default" href="{{ route('customer.edit', ['id' => $customer->id]) }}">Edit</a>
                 </td>
         @endforeach
     </tbody>

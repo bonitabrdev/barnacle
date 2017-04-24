@@ -26,6 +26,8 @@ Route::get('/customers/create', 'CustomerController@create')->name('customer.cre
 Route::post('/customers', 'CustomerController@store')->name('customer.store');
 Route::get('/customers/{id}', 'CustomerController@show')->name('customer.show');
 Route::get('/customers', 'CustomerController@index')->name('customer.index');
+Route::get('/customers/{id}/edit', 'CustomerController@edit')->name('customer.edit');
+Route::put('/customers/{id}', 'CustomerController@update')->name('customer.update');
 
 Route::get('/boats/create', 'BoatController@create')->name('boat.create');
 Route::post('/boats', 'BoatController@store')->name('boat.store');

@@ -8,6 +8,8 @@
 
 @section('panel_body')
 <form method="POST" action="{{ route('reservation.store') }}">
+    {{ csrf_field() }}
+    <input type="hidden" id="reserved_slots" name="reserved_slots" value="" />
     <div class="row">
         <div class="col-md-12">
             <h3>Reserved Date and Hours</h3>
@@ -67,11 +69,10 @@
                 </div> <!-- .row -->
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table" id="reservation_slots_table">
+                        <table class="table table-bordered" id="reservation_slots_table">
                             <thead>
                                 <tr>
                                     <th>Boat</th>
-                                    <th>Time Slots</th>
                                 </tr>
                             </thead>
                             <tbody>

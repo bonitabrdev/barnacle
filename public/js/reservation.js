@@ -55,66 +55,71 @@
         console.log( 'selections = ' + this.selections );
     };
 
-    $( document ).ready( function () {
-        $( '#btn_reservation_slots_query' ).click( function ( event ) {
-            var year = $( '#reservation_slots_query_year' ).val();
-            var month = $( '#reservation_slots_query_month' ).val();
-            var day = $( '#reservation_slots_query_day' ).val();
+    function reservationSlotsQueryButtonClickHandler( event ) {
+        var year = $( '#reservation_slots_query_year' ).val();
+        var month = $( '#reservation_slots_query_month' ).val();
+        var day = $( '#reservation_slots_query_day' ).val();
 
-            var url = '/reservation_slots/json/date/' + year + '/' + month + '/' + day;
+        var url = '/reservation_slots/json/date/' + year + '/' + month + '/' + day;
 
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                method: 'GET'
-            }).done( function ( data ) {
-                $( '#reservation_slots_date' ).text( data.date );
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            method: 'GET'
+        }).done( function ( data ) {
+            $( '#reservation_slots_date' ).text( data.date );
 
-                let table = $( '#reservation_slots_table' ).get( 0 );
-                let manager = $( table ).data( 'manager' );
-                if ( manager !== undefined ) {
-                    manager.destroyTable();
-                    $( table ).removeData( 'manager' );
-                }
-                manager = new ReservationSlotsTableManager( table, data );
-                $( table ).data( 'manager', manager );
-                manager.makeTable();
-            }).fail( function () {
-                console.log( 'Failed ajax reqeust!' );
-            });
-        });
-
-        $( '#btn_save_reservation_slots' ).click( function ( event ) {
-            let manager = $( '#reservation_slots_table' ).data( 'manager' );
-            // sort the selections based on slot.start_time
-            manager.selections.sort( function ( a, b ) {
-                if ( a.start_time < b.start_time ) {
-                    return -1;
-                }
-                if ( a.start_time > b.start_time ) {
-                    return 1;
-                }
-                return 0;
-            });
-            // for now, we assume selections are contiguous (add validation later)
-            let reserved_start_time = manager.selections[0].start_time;
-            let reserved_end_time = manager.selections[manager.selections.length - 1].end_time;
-            let reserved_num_hours = ( manager.selections.length * 30 ) / 60;
-            let reserved_date = manager.data.date;
-            let slot_ids = [];
-            for ( let i = 0; i < manager.selections.length; i++ ) {
-                slot_ids.push( manager.selections[i].slot_id );
+            let table = $( '#reservation_slots_table' ).get( 0 );
+            let manager = $( table ).data( 'manager' );
+            if ( manager !== undefined ) {
+                manager.destroyTable();
+                $( table ).removeData( 'manager' );
             }
-            let reserved_slots = slot_ids.join( ',' );
-
-            $( '#reserved_slots' ).val( reserved_slots );
-
-            $( '#reserved_date' ).text( reserved_date );
-            $( '#reserved_start_time' ).text( reserved_start_time );
-            $( '#reserved_end_time' ).text( reserved_end_time );
-            $( '#reserved_num_hours' ).text( reserved_num_hours );
-
-            $( '#reservation_slots_modal' ).modal( 'hide' );
+            manager = new ReservationSlotsTableManager( table, data );
+            $( table ).data( 'manager', manager );
+            manager.makeTable();
+        }).fail( function () {
+            console.log( 'Failed ajax reqeust!' );
         });
+    }
+
+    function saveReservationSlotsButtonClickHandler( event ) {
+        let manager = $( '#reservation_slots_table' ).data( 'manager' );
+        // sort the selections based on slot.start_time
+        manager.selections.sort( function ( a, b ) {
+            if ( a.start_time < b.start_time ) {
+                return -1;
+            }
+            if ( a.start_time > b.start_time ) {
+                return 1;
+            }
+            return 0;
+        });
+        // for now, we assume selections are contiguous (add validation later)
+        let reserved_start_time = manager.selections[0].start_time;
+        let reserved_end_time = manager.selections[manager.selections.length - 1].end_time;
+        let reserved_num_hours = ( manager.selections.length * 30 ) / 60;
+        let reserved_date = manager.data.date;
+        let slot_ids = [];
+        for ( let i = 0; i < manager.selections.length; i++ ) {
+            slot_ids.push( manager.selections[i].slot_id );
+        }
+        let reserved_slots = slot_ids.join( ',' );
+
+        $( '#reserved_slots' ).val( reserved_slots );
+
+        $( '#reserved_date' ).text( reserved_date );
+        $( '#reserved_start_time' ).text( reserved_start_time );
+        $( '#reserved_end_time' ).text( reserved_end_time );
+        $( '#reserved_num_hours' ).text( reserved_num_hours );
+
+        $( '#reservation_slots_modal' ).modal( 'hide' );
+    }
+
+    $( document ).ready( function () {
+        $( '#btn_reservation_slots_query' )
+            .click( reservationSlotsQueryButtonClickHandler );
+        $( '#btn_save_reservation_slots' )
+            .click( saveReservationSlotsButtonClickHandler );
     });
 })( jQuery );

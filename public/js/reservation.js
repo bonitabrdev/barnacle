@@ -29,6 +29,9 @@
                 });
                 $( td ).data( 'slot', slot );
                 $( td ).click( this.cellClickHandler.bind( this ));
+                if ( slot.available === 0 ) {
+                    $( td ).addClass( 'danger' );
+                }
             }
         }
     };
@@ -43,6 +46,11 @@
 
     ReservationSlotsTableManager.prototype.cellClickHandler = function ( event ) {
         let slot = $( event.target ).data( 'slot' );
+
+        if ( slot.available === 0 ) {
+            return;
+        }
+
         let selections_index = this.selections.indexOf( slot );
         if ( selections_index === -1 ) {
             this.selections.push( slot );

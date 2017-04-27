@@ -9,14 +9,19 @@ use Carbon\Carbon;
 
 use App\ReservationSlot;
 use App\Boat;
+use App\ReservationSlotsManager;
 
 class ReservationSlotsController extends Controller
 {
     //
 
-    public function __construct()
+    protected $reservation_slots_manager;
+
+    public function __construct(ReservationSlotsManager $reservation_slots_manager)
     {
         $this->middleware('auth');
+
+        $this->reservation_slots_manager = $reservation_slots_manager;
     }
 
     public function showMakeSlotsForDay(Request $request)

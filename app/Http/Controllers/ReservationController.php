@@ -9,14 +9,19 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Customer;
 use App\Reservation;
 use App\ReservationSlot;
+use App\ReservationSlotsManager;
 
 class ReservationController extends Controller
 {
     //
 
-    public function __construct()
+    protected $reservation_slots_manager;
+
+    public function __construct(ReservationSlotsManager $reservation_slots_manager)
     {
         $this->middleware('auth');
+
+        $this->reservation_slots_manager = $reservation_slots_manager;
     }
 
     public function index(Request $request)

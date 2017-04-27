@@ -47,14 +47,15 @@ class ReservationSlotsController extends Controller
             ) {
                 $slot = new ReservationSlot;
 
-                $slot->boat_id = $boat->id;
+                //$slot->boat_id = $boat->id;
                 $slot->reservation_id = NULL;
                 $slot->reservation_date = $dt->copy();
                 $slot->start_time = $dt->copy();
                 $slot->end_time = $dt->copy()->addMinutes($slot_minutes);
                 $slot->available = TRUE;
 
-                $slot->save();
+                //$slot->save();
+                $boat->reservation_slots()->save($slot);
             }
         }
 
@@ -90,7 +91,7 @@ class ReservationSlotsController extends Controller
     public function jsonSlotsForDay(Request $request, $year, $month, $day)
     {
         $dt = Carbon::create($year, $month, $day);
-        $slots = ReservationSlot::where('reservation_date', $dt->toDateString())->get();
+        //$slots = ReservationSlot::where('reservation_date', $dt->toDateString())->get();
         $boats = Boat::all();
         $result = [
             'date' => $dt->toDateString(),
@@ -100,8 +101,9 @@ class ReservationSlotsController extends Controller
         foreach ($boats as $boat) {
             $result_slots = [];
 
-            $filtered_slots = $slots->where('boat_id', $boat->id)->sortBy('start_time');
-            foreach ($filtered_slots as $slot) {
+            //$filtered_slots = $slots->where('boat_id', $boat->id)->sortBy('start_time');
+            $slots = $boat->reservation_slots()->where('reservation_date', $dt->toDateString())->get()->sortBy('start_time');
+            foreach ($slots as $slot) {
                 $result_slots[] = [
                     'slot_id' => $slot->id,
                     'reservation_id' => $slot->reservation_id,

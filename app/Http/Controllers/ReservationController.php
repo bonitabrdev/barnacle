@@ -86,17 +86,19 @@ class ReservationController extends Controller
         // make the reservation
         $reservation = new Reservation;
 
-        $reservation->customer_id = $customer->id;
+        //$reservation->customer_id = $customer->id;
         $reservation->num_people = $request->input('num_people');
         $reservation->total_price = $request->input('total_price');
 
-        $reservation->save();
+        //$reservation->save();
+        $customer->reservations()->save($reservation);
 
         // attach the reservation to each reservation slot
         $slots = ReservationSlot::find($reserved_slots);
 
         foreach ($slots as $slot) {
-            $slot->reservation_id = $reservation->id;
+            //$slot->reservation_id = $reservation->id;
+            $slot->reservation()->associate($reservation);
             $slot->save();
         }
 

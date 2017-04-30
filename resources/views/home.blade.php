@@ -9,16 +9,6 @@
     <a class="btn btn-default" href="{{ route('customer.create') }}">Create</a>
     <a class="btn btn-default" href="{{ route('customer.index') }}">View All</a>
 </p>
-<p>Boat Management:</p>
-<p>
-    <a class="btn btn-default" href="{{ route('boat.create') }}">Create</a>
-    <a class="btn btn-default" href="{{ route('boat.index') }}">View All</a>
-</p>
-<p>Reservation Slots Management:</p>
-<p>
-    <a class="btn btn-default" href="{{ route('reservation_slots.make.show') }}">Make Slots</a>
-    <a class="btn btn-default" href="{{ route('reservation_slots.index') }}">View Slots</a>
-</p>
 <p>Reservation Management:</p>
 <p>
     <a class="btn btn-default" href="{{ route('reservation.create') }}">Create</a>

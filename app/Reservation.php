@@ -15,11 +15,6 @@ class Reservation extends Model
         return $this->belongsTo('App\Customer');
     }
 
-    public function reservation_slots()
-    {
-        return $this->hasMany('App\ReservationSlot');
-    }
-
     public function getReservedDateAttribute($value)
     {
         $date = Carbon::parse($value);

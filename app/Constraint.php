@@ -6,16 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 use Carbon\Carbon;
 
-class Reservation extends Model
+class Constraint extends Model
 {
     //
 
-    public function customer()
-    {
-        return $this->belongsTo('App\Customer');
-    }
-
-    public function getReservedDateAttribute($value)
+    public function getConstrainedDateAttribute($value)
     {
         $date = Carbon::parse($value);
         $date->hour = 0;
@@ -24,15 +19,15 @@ class Reservation extends Model
         return $date;
     }
 
-    public function setReservedDateAttribute($value)
+    public function setConstrainedDateAttribute($value)
     {
-        $this->attributes['reserved_date'] = $value->toDateString();
+        $this->attributes['constrained_date'] = $value->toDateString();
     }
 
     public function getStartAttribute($value)
     {
         $time = Carbon::parse($value);
-        $date = $this->reserved_date;
+        $date = $this->constrained_date;
         $time->year = $date->year;
         $time->month = $date->month;
         $time->day = $date->day;
@@ -47,7 +42,7 @@ class Reservation extends Model
     public function getEndAttribute($value)
     {
         $time = Carbon::parse($value);
-        $date = $this->reserved_date;
+        $date = $this->constrained_date;
         $time->year = $date->year;
         $time->month = $date->month;
         $time->day = $date->day;
@@ -57,5 +52,15 @@ class Reservation extends Model
     public function setEndAttribute($value)
     {
         $this->attributes['end'] = $value->toTimeString();
+    }
+
+    public function getDataAttribute($value)
+    {
+        return json_decode($value, TRUE);
+    }
+
+    public function setDataAttribute($value)
+    {
+        $this->attributes['data'] = json_encode($value);
     }
 }

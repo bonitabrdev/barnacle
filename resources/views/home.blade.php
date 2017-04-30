@@ -9,6 +9,11 @@
     <a class="btn btn-default" href="{{ route('customer.create') }}">Create</a>
     <a class="btn btn-default" href="{{ route('customer.index') }}">View All</a>
 </p>
+<p>Constraint Management:</p>
+<p>
+    <a class="btn btn-default" href="{{ route('constraint.create') }}">Create</a>
+    <a class="btn btn-default" href="{{ route('constraint.index') }}">View All</a>
+</p>
 <p>Reservation Management:</p>
 <p>
     <a class="btn btn-default" href="{{ route('reservation.create') }}">Create</a>

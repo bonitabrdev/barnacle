@@ -22,6 +22,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/constraints/create', 'ConstraintController@create')->name('constraint.create');
+Route::post('/constraints', 'ConstraintController@store')->name('constraint.store');
+Route::get('/constraints/{id}', 'ConstraintController@show')->name('constraint.show');
+Route::get('/constraints', 'ConstraintController@index')->name('constraint.index');
+Route::get('/constraints/{id}/edit', 'ConstraintController@edit')->name('constraint.edit');
+Route::put('/constraints/{id}', 'ConstraintController@update')->name('constraint.update');
+
 Route::get('/customers/create', 'CustomerController@create')->name('customer.create');
 Route::post('/customers', 'CustomerController@store')->name('customer.store');
 Route::get('/customers/{id}', 'CustomerController@show')->name('customer.show');

@@ -4,8 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use App\ReservationSlotsManager;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,8 +24,5 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->singleton(ReservationSlotsManager::class, function ($app) {
-            return new ReservationSlotsManager(8, 18, 30);
-        });
     }
 }

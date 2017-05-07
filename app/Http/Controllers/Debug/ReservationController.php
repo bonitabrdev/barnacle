@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Debug;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,12 +24,12 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-        return redirect()->route('home');
+        return redirect()->route('debug.home');
     }
 
     public function create(Request $request)
     {
-        return view('reservation.create');
+        return view('debug.reservation.create');
     }
 
     public function show(Request $request, $id)
@@ -37,14 +39,14 @@ class ReservationController extends Controller
         try {
             $reservation = Reservation::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return view('reservation.notfound')->with('id', $id);
+            return view('debug.reservation.notfound')->with('id', $id);
         }
 
-        return view('reservation.show')->with('reservation', $reservation);
+        return view('debug.reservation.show')->with('reservation', $reservation);
     }
 
     public function edit(Request $request, $id)
     {
-        return redirect()->route('home');
+        return redirect()->route('debug.home');
     }
 }

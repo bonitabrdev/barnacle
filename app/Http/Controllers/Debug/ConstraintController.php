@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Debug;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -20,7 +22,7 @@ class ConstraintController extends Controller
 
     public function create(Request $request)
     {
-        return view('constraint.create');
+        return view('debug.constraint.create');
     }
 
     public function store(Request $request)
@@ -58,7 +60,7 @@ class ConstraintController extends Controller
 
         $constraint->save();
 
-        return redirect()->route('constraint.show', ['id' => $constraint->id]);
+        return redirect()->route('debug.constraint.show', ['id' => $constraint->id]);
     }
 
     public function show(Request $request, $id)
@@ -68,24 +70,24 @@ class ConstraintController extends Controller
         try {
             $constraint = Constraint::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return view('constraint.notfound')->with('id', $id);
+            return view('debug.constraint.notfound')->with('id', $id);
         }
 
-        return view('constraint.show')->with('constraint', $constraint);
+        return view('debug.constraint.show')->with('constraint', $constraint);
     }
 
     public function index(Request $request)
     {
-        return redirect()->route('home');
+        return redirect()->route('debug.home');
     }
 
     public function edit(Request $request, $id)
     {
-        return redirect()->route('home');
+        return redirect()->route('debug.home');
     }
 
     public function update(Request $request, $id)
     {
-        return redirect()->route('home');
+        return redirect()->route('debug.home');
     }
 }

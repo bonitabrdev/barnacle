@@ -21,8 +21,8 @@
                 <td>{{ $customer->last_name }}</td>
                 <td>{{ $customer->phone }}</td>
                 <td>
-                    <a class="btn btn-default" href="{{ route('customer.show', ['id' => $customer->id]) }}">View</a>
-                    <a class="btn btn-default" href="{{ route('customer.edit', ['id' => $customer->id]) }}">Edit</a>
+                    <a class="btn btn-default" href="{{ route('debug.customer.show', ['id' => $customer->id]) }}">View</a>
+                    <a class="btn btn-default" href="{{ route('debug.customer.edit', ['id' => $customer->id]) }}">Edit</a>
                 </td>
         @endforeach
     </tbody>

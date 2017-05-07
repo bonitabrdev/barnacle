@@ -3,7 +3,7 @@
 @section('panel_heading', 'Create Customer')
 
 @section('panel_body')
-<form method="POST" action="{{ route('customer.store') }}">
+<form method="POST" action="{{ route('debug.customer.store') }}">
     {{ csrf_field() }}
     <div class="form-group">
         <label for="first_name">First Name</label>

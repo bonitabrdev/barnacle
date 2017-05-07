@@ -3,7 +3,7 @@
 @section('panel_heading', 'Create Constraint')
 
 @section('panel_body')
-<form method="POST" action="{{ route('constraint.store') }}">
+<form method="POST" action="{{ route('debug.constraint.store') }}">
     {{ csrf_field() }}
     <div class="row">
         <div class="col-md-12">

@@ -3,7 +3,7 @@
 @section('panel_heading', 'Edit Customer')
 
 @section('panel_body')
-<form method="POST" action="{{ route('customer.update', ['id' => $customer->id]) }}">
+<form method="POST" action="{{ route('debug.customer.update', ['id' => $customer->id]) }}">
     {{ csrf_field() }}
     {{ method_field('PUT') }}
     <div class="form-group">

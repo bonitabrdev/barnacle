@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Debug;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,7 +20,7 @@ class CustomerController extends Controller
 
     public function create(Request $request)
     {
-        return view('customer.create');
+        return view('debug.customer.create');
     }
 
     public function store(Request $request)
@@ -42,7 +44,7 @@ class CustomerController extends Controller
 
         $customer->save();
 
-        return redirect()->route('customer.show', ['id' => $customer->id]);
+        return redirect()->route('debug.customer.show', ['id' => $customer->id]);
     }
 
     public function show(Request $request, $id)
@@ -52,17 +54,17 @@ class CustomerController extends Controller
         try {
             $customer = Customer::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return view('customer.notfound')->with('id', $id);
+            return view('debug.customer.notfound')->with('id', $id);
         }
 
-        return view('customer.show')->with('customer', $customer);
+        return view('debug.customer.show')->with('customer', $customer);
     }
 
     public function index(Request $request)
     {
         $customers =  Customer::all();
 
-        return view('customer.index')->with('customers', $customers);
+        return view('debug.customer.index')->with('customers', $customers);
     }
 
     public function edit(Request $request, $id)
@@ -72,10 +74,10 @@ class CustomerController extends Controller
         try {
             $customer = Customer::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return view('customer.notfound')->with('id', $id);
+            return view('debug.customer.notfound')->with('id', $id);
         }
 
-        return view('customer.edit')->with('customer', $customer);
+        return view('debug.customer.edit')->with('customer', $customer);
     }
 
     public function update(Request $request, $id)
@@ -85,7 +87,7 @@ class CustomerController extends Controller
         try {
             $customer = Customer::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            return view('customer.notfound')->with('id', $id);
+            return view('debug.customer.notfound')->with('id', $id);
         }
 
         $customer->first_name = $request->input('first_name');
@@ -105,6 +107,6 @@ class CustomerController extends Controller
 
         $customer->save();
 
-        return redirect()->route('customer.show', ['id' => $id]);
+        return redirect()->route('debug.customer.show', ['id' => $id]);
     }
 }

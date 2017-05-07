@@ -15,4 +15,19 @@ class AdministrationController extends Controller
     {
         return view('admin.dashboard');
     }
+
+    public function manageConstraints(Request $request)
+    {
+        return view('admin.constraints.manage');
+    }
+
+    public function manageUsers(Request $request)
+    {
+        return view('admin.users.manage');
+    }
+
+    public function manageSettings(Request $request)
+    {
+        return view('admin.settings.manage');
+    }
 }

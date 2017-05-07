@@ -29,6 +29,15 @@ Route::group(['prefix' => '/admin'], function () {
 
     Route::get('/dashboard', 'AdministrationController@dashboard')
         ->name('admin.dashboard');
+
+    Route::get('/constraints', 'AdministrationController@manageConstraints')
+        ->name('admin.constraints.manage');
+
+    Route::get('/users', 'AdministrationController@manageUsers')
+        ->name('admin.users.manage');
+
+    Route::get('/settings', 'AdministrationController@manageSettings')
+        ->name('admin.settings.manage');
 });
 
 

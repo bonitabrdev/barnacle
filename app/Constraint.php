@@ -63,4 +63,15 @@ class Constraint extends Model
     {
         $this->attributes['data'] = json_encode($value);
     }
+
+    public function scopeWithDate($query, $date)
+    {
+        return $query->where('constrained_date', $date->toDateString());
+    }
+
+    public function scopeWithDateRange($query, $first, $last)
+    {
+        return $query->where('constrained_date', '>=', $first->toDateString())
+            ->where('constrained_date', '<=', $last->toDateString());
+    }
 }

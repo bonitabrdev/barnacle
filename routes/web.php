@@ -22,6 +22,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => '/json', 'namespace' => 'Json'], function () {
+    Route::get('/constraints/date/{year}-{month}-{day}', 'ConstraintController@getByDate');
+});
+
 Route::group(['prefix' => '/admin'], function () {
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');

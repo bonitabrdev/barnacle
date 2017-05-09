@@ -24,6 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => '/json', 'namespace' => 'Json'], function () {
     Route::get('/constraints/date/{year}-{month}-{day}', 'ConstraintController@getByDate');
+    Route::post('/constraints', 'ConstraintController@store');
 });
 
 Route::group(['prefix' => '/admin'], function () {

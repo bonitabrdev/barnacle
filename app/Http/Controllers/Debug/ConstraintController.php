@@ -33,7 +33,7 @@ class ConstraintController extends Controller
         $month = $request->input('month');
         $day = $request->input('day');
         $date = Carbon::create($year, $month, $day, 0, 0, 0);
-        $constraint->constrained_date = $date;
+        $constraint->date = $date;
 
         $start_hour = $request->input('start_hour');
         $start_minute = $request->input('start_minute');

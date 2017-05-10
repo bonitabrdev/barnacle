@@ -10,7 +10,7 @@ class Constraint extends Model
 {
     //
 
-    public function getConstrainedDateAttribute($value)
+    public function getDateAttribute($value)
     {
         $date = Carbon::parse($value);
         $date->hour = 0;
@@ -19,15 +19,15 @@ class Constraint extends Model
         return $date;
     }
 
-    public function setConstrainedDateAttribute($value)
+    public function setDateAttribute($value)
     {
-        $this->attributes['constrained_date'] = $value->toDateString();
+        $this->attributes['date'] = $value->toDateString();
     }
 
     public function getStartAttribute($value)
     {
         $time = Carbon::parse($value);
-        $date = $this->constrained_date;
+        $date = $this->date;
         $time->year = $date->year;
         $time->month = $date->month;
         $time->day = $date->day;
@@ -42,7 +42,7 @@ class Constraint extends Model
     public function getEndAttribute($value)
     {
         $time = Carbon::parse($value);
-        $date = $this->constrained_date;
+        $date = $this->date;
         $time->year = $date->year;
         $time->month = $date->month;
         $time->day = $date->day;
@@ -66,12 +66,12 @@ class Constraint extends Model
 
     public function scopeWithDate($query, $date)
     {
-        return $query->where('constrained_date', $date->toDateString());
+        return $query->where('date', $date->toDateString());
     }
 
     public function scopeWithDateRange($query, $first, $last)
     {
-        return $query->where('constrained_date', '>=', $first->toDateString())
-            ->where('constrained_date', '<=', $last->toDateString());
+        return $query->where('date', '>=', $first->toDateString())
+            ->where('date', '<=', $last->toDateString());
     }
 }

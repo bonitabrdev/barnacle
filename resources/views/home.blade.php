@@ -1,7 +1,7 @@
-@extends('layouts.simple.panel')
+@extends('layouts.base')
 
-@section('panel_heading', 'Dashboard')
+@section('heading', 'Dashboard')
 
-@section('panel_body')
-<p>You are logged in!</p>
+@section('body')
+<p>This is the home dashboard.</p>
 @endsection

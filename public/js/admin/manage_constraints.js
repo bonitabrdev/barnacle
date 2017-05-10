@@ -20,7 +20,7 @@ var vm_view_current_constraints = new Vue({
         constraintDate: '',
         constraint: {
             id: '',
-            constrained_date: '',
+            date: '',
             start: '',
             end: '',
             num_40hp: '',
@@ -31,7 +31,7 @@ var vm_view_current_constraints = new Vue({
         fetchConstraintData: function (event) {
             this.hasConstraintData = false;
             this.constraint.id = '';
-            this.constraint.constrained_date = '';
+            this.constraint.date = '';
             this.constraint.start = '';
             this.constraint.end = '';
             this.constraint.num_40hp = '';
@@ -50,7 +50,7 @@ var vm_view_current_constraints = new Vue({
                 console.log(this);
 
                 this.constraint.id = data.id;
-                this.constraint.constrained_date = data.constrained_date;
+                this.constraint.date = data.date;
                 this.constraint.start = data.start;
                 this.constraint.end = data.end;
                 this.constraint.num_40hp = data.data['40HP'];
@@ -137,6 +137,56 @@ var vm_create_constraint = new Vue({
             } else {
                 return parts[2];
             }
+        }
+    }
+});
+
+var vmCreateConstraints = new Vue({
+    el: '#create_constraints',
+    data: {
+        first: (new Date(Date.now())).toISOString().split('T')[0],
+        last: (new Date(Date.now())).toISOString().split('T')[0],
+        start: '08:00:00',
+        end: '18:00:00',
+        num_40hp: 2,
+        num_60hp: 2,
+        messages: []
+    },
+    methods: {
+        createConstraints: function(event) {
+            var url = '/json/constraints/range';
+            var data = {
+                _token: window.Laravel.csrfToken,
+                first: this.first,
+                last: this.last,
+                start: this.start,
+                end: this.end,
+                num_40hp: this.num_40hp,
+                num_60hp: this.num_60hp
+            };
+
+            $.ajax({
+                url: url,
+                data: data,
+                dataType: 'json',
+                method: 'POST',
+                context: this
+            }).done(function (data, textStatus, jqXHR) {
+                console.log('AJAX Done: ' + textStatus);
+                console.log(data);
+                this.messages.push({
+                    type: 'success',
+                    text: 'Successfully created constraints for date range ' + this.first + ' to ' + this.last
+                });
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log('AJAX Error: ' + textStatus);
+                console.log(errorThrown);
+                console.log(jqXHR);
+                this.messages.push({
+                    type: 'error',
+                    text: jqXHR.responseJSON.error
+                });
+            })
         }
     }
 });

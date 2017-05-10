@@ -30,7 +30,7 @@ class ConstraintController extends Controller
         } else {
             $constraint = $constraints->first();
             $responseData['id'] = $constraint->id;
-            $responseData['constrained_date'] = $constraint->constrained_date->toDateString();
+            $responseData['date'] = $constraint->date->toDateString();
             $responseData['start'] = $constraint->start->toTimeString();
             $responseData['end'] = $constraint->end->toTimeString();
             $responseData['data'] = $constraint->data;
@@ -64,18 +64,56 @@ class ConstraintController extends Controller
         $end->second = $request->input('end_second');
 
         $data = [
-            '40HP' => $request->input('num_40hp'),
-            '60HP' => $request->input('num_60hp')
+            '40HP' => intval($request->input('num_40hp')),
+            '60HP' => intval($request->input('num_60hp'))
         ];
 
         $constraint = new Constraint;
-        $constraint->constrained_date = $date;
+        $constraint->date = $date;
         $constraint->start = $start;
         $constraint->end = $end;
         $constraint->data = $data;
         $constraint->save();
 
         $responseData['id'] = $constraint->id;
+
+        return response()->json($responseData, 201);
+    }
+
+    public function storeRange(Request $request)
+    {
+        $responseData = [];
+
+        $first = Carbon::parse($request->input('first'));
+        $last = Carbon::parse($request->input('last'));
+        $start = Carbon::parse($request->input('start'));
+        $end = Carbon::parse($request->input('end'));
+        $data = [
+            '40HP' => intval($request->input('num_40hp')),
+            '60HP' => intval($request->input('num_60hp'))
+        ];
+
+        $constraints = Constraint::withDateRange($first, $last)->get();
+        if ($constraints->isNotEmpty()) {
+            $responseData['error'] = "One or more constraints already exist for the date range " . $first->toDateString() . " to " . $last->toDateString();
+
+            return response()->json($responseData, 409);
+        }
+
+        $responseData['ids'] = [];
+
+        for ($dt = $first->copy(); $dt->lte($last); $dt->addDay()) {
+            $constraint = new Constraint;
+
+            $constraint->date = $dt;
+            $constraint->start = $start;
+            $constraint->end = $end;
+            $constraint->data = $data;
+
+            $constraint->save();
+
+            $responseData['ids'][] = $constraint->id;
+        }
 
         return response()->json($responseData, 201);
     }

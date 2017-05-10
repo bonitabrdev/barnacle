@@ -26,6 +26,7 @@ Route::group(['prefix' => '/json', 'namespace' => 'Json'], function () {
     Route::get('/constraints/date/{year}-{month}-{day}', 'ConstraintController@getByDate');
     Route::post('/constraints', 'ConstraintController@store');
     Route::post('/constraints/range', 'ConstraintController@storeRange');
+    Route::get('/constraints/range/{first}/{last}', 'ConstraintController@getRange');
 });
 
 Route::group(['prefix' => '/admin'], function () {

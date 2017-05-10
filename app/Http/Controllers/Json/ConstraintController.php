@@ -117,4 +117,32 @@ class ConstraintController extends Controller
 
         return response()->json($responseData, 201);
     }
+
+    public function getRange(Request $request, $first, $last)
+    {
+        $responseData = [];
+
+        $first = Carbon::parse($first);
+        $last = Carbon::parse($last);
+
+        $responseData['first'] = $first->toDateString();
+        $responseData['last'] = $last->toDateString();
+
+        $constraints = Constraint::withDateRange($first, $last)->get();
+
+        $responseData['count'] = $constraints->count();
+        $responseData['constraints'] = [];
+
+        foreach ($constraints as $constraint) {
+            $responseData['constraints'][] = [
+                'id' => $constraint->id,
+                'date' => $constraint->date->toDateString(),
+                'start' => $constraint->start->toTimeString(),
+                'end' => $constraint->end->toTimeString(),
+                'data' => $constraint->data
+            ];
+        }
+
+        return response()->json($responseData);
+    }
 }

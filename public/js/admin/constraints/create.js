@@ -1,4 +1,4 @@
-// js/admin/manage_constraints.js
+// js/admin/constraints/create.js
 
 var vmCreateConstraints = new Vue({
     el: '#create_constraints',

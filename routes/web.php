@@ -11,11 +11,18 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => '/json', 'namespace' => 'Json'], function () {
+Route::group(['prefix' => '/json', 'namespace' => 'Json', 'middleware' => 'auth'], function () {
     Route::get('/constraints/date/{year}-{month}-{day}', 'ConstraintController@getByDate');
     Route::post('/constraints', 'ConstraintController@store');
     Route::post('/constraints/range', 'ConstraintController@storeRange');
     Route::get('/constraints/range/{first}/{last}', 'ConstraintController@getRange');
+
+    Route::post('/customers', 'CustomerController@store');
+});
+
+Route::group(['prefix' => '/reservations', 'middleware' => 'auth'], function () {
+    Route::get('/create', 'ReservationController@create')
+        ->name('reservation.create');
 });
 
 Route::group(['prefix' => '/admin'], function () {

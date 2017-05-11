@@ -8,7 +8,7 @@
                 <div class="panel-heading">Reservations</div>
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
-                        <li><a href="#">Create</a></li>
+                        <li><a href="{{ route('reservation.create') }}">Create</a></li>
                         <li><a href="#">Find</a></li>
                     </ul>
                 </div>

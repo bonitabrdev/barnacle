@@ -27,6 +27,14 @@ var vmCreateReservation = new Vue({
                     zip: ''
                 }
             }
+        },
+        reservation: {
+            reservedDate: (new Date(Date.now())).toISOString().split('T')[0],
+            start: '09:00:00',
+            end: '17:00:00',
+            numPeople: 1,
+            totalPrice: 236,
+            type: '40HP'
         }
     },
     methods: {
@@ -65,6 +73,31 @@ var vmCreateReservation = new Vue({
                 console.log('AJAX Error: ' + textStatus);
                 console.log(errorThrown);
                 console.log(jqXHR);
+            });
+        },
+        submitReservation: function (event) {
+            var url = '/json/reservations/create/requests';
+            var data = {
+                _token: window.Laravel.csrfToken,
+                customer_id: this.customer.id,
+                reserved_date: this.reservation.reservedDate,
+                start: this.reservation.start,
+                end: this.reservation.end,
+                num_people: this.reservation.numPeople,
+                total_price: this.reservation.totalPrice,
+                type: this.reservation.type
+            };
+
+            $.ajax({
+                context: this,
+                url: url,
+                data: data,
+                dataType: 'json',
+                method: 'POST'
+            }).done(function (data, textStatus, jqXHR) {
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+
             });
         }
     }

@@ -220,25 +220,25 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Reserved Date</label>
-                <input type="date" class="form-control" />
+                <input type="date" class="form-control" v-model="reservation.reservedDate" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label>Start Time</label>
-                <input type="time" class="form-control" />
+                <input type="time" class="form-control" v-model="reservation.start" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label>End Time</label>
-                <input type="time" class="form-control" />
+                <input type="time" class="form-control" v-model="reservation.end" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label>Number of People</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" v-model="reservation.numPeople" />
             </div>
         </div>
     </div>
@@ -246,17 +246,17 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Total Price</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" v-model="reservation.totalPrice" />
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label>Boat Type</label>
                 <div class="radio">
-                    <label><input type="radio" name="boat_type" value="40HP" />40HP</label>
+                    <label><input type="radio" name="boat_type" value="40HP" v-model="reservation.type" />40HP</label>
                 </div>
                 <div class="radio">
-                    <label><input type="radio" name="boat_type" value="60HP" />60HP</label>
+                    <label><input type="radio" name="boat_type" value="60HP" v-model="reservation.type" />60HP</label>
                 </div>
             </div>
         </div>
@@ -264,7 +264,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <button type="button" class="btn btn-primary">Submit Reservation</button>
+                <button type="button" class="btn btn-primary" v-on:click="submitReservation">Submit Reservation</button>
             </div>
         </div>
     </div>

@@ -6,15 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use Carbon\Carbon;
 
-class Reservation extends Model
+class CreateReservationRequest extends Model
 {
-    //
-
-    public function customer()
-    {
-        return $this->belongsTo('App\Customer');
-    }
-
     public function getReservedDateAttribute($value)
     {
         $date = Carbon::parse($value);
@@ -59,8 +52,21 @@ class Reservation extends Model
         $this->attributes['end'] = $value->toTimeString();
     }
 
-    public function scopeWithReservedDate($query, $date)
+    public function getProcessedAttribute($value)
     {
-        return $query->where('reserved_date', $date->toDateString());
+        if ($value === 0) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
+    public function setProcessedAttribute($value)
+    {
+        if ($value === TRUE) {
+            $this->attributes['processed'] = 1;
+        } else {
+            $this->attributes['processed'] = 0;
+        }
     }
 }

@@ -39,7 +39,7 @@ class ProcessCreateReservationRequest implements ShouldQueue
     {
         DB::transaction(function () {
             $date = $this->createReservationRequest->reserved_date;
-            $constraint = Constraint::withDate($date)->lockForUpdate()->get();
+            $constraint = Constraint::withDate($date)->lockForUpdate()->get()->first();
 
             $reservations = Reservation::withReservedDate($date)->get();
             $table = new ConstrainedReservationsTable($constraint->start, $constraint->end, $constraint->data);

@@ -18,11 +18,17 @@ Route::group(['prefix' => '/json', 'namespace' => 'Json', 'middleware' => 'auth'
     Route::get('/constraints/range/{first}/{last}', 'ConstraintController@getRange');
 
     Route::post('/customers', 'CustomerController@store');
+
+    Route::post('/reservations/create/requests', 'CreateReservationRequestController@store');
+    Route::get('/reservations/create/requests/{id}/status', 'CreateReservationRequestController@status');
 });
 
 Route::group(['prefix' => '/reservations', 'middleware' => 'auth'], function () {
     Route::get('/create', 'ReservationController@create')
         ->name('reservation.create');
+    Route::get('/create/requests/{id}', 'ReservationController@showRequest');
+    Route::get('/{id}', 'ReservationController@show');
+    Route::get('/create/failed', 'ReservationController@failed');
 });
 
 Route::group(['prefix' => '/admin'], function () {

@@ -1,4 +1,4 @@
-// js/reservation/create.js
+// js/reservation/create/index.js
 
 var vmCreateReservation = new Vue({
     el: '#create_reservation',
@@ -95,9 +95,14 @@ var vmCreateReservation = new Vue({
                 dataType: 'json',
                 method: 'POST'
             }).done(function (data, textStatus, jqXHR) {
+                console.log('AJAX Success: ' + textStatus);
+                console.log(data);
 
+                window.location = '/reservations/create/requests/' + data.id;
             }).fail(function (jqXHR, textStatus, errorThrown) {
-
+                console.log('AJAX Erro: ' + textStatus);
+                console.log(errorThrown);
+                console.log(jqXHR);
             });
         }
     }

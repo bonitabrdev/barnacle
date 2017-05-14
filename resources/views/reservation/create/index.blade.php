@@ -1,7 +1,7 @@
 @extends('layouts.base')
 
 @push('footer_scripts')
-<script type="text/javascript" src="{{ asset('js/reservation/create.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/reservation/create/index.js') }}"></script>
 @endpush
 
 @section('heading', 'Create Reservation')

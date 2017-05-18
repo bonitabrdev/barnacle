@@ -31,7 +31,23 @@ var vmCreateReservation = new Vue({
                 last: ''
             },
             phone: '',
-            dob: ''
+            dob: '',
+            driversLicense: '',
+            email: '',
+            address: {
+                home: {
+                    street: '',
+                    city: '',
+                    state: '',
+                    zip: ''
+                },
+                local: {
+                    street: '',
+                    city: '',
+                    state: '',
+                    zip: ''
+                }
+            }
         },
         errors: {
             customer: new Errors()
@@ -58,6 +74,16 @@ var vmCreateReservation = new Vue({
         },
         createReservation: function() {
 
+        },
+        copyHomeToLocal: function() {
+            this.customer.address.local.street = this.customer.address.home.street;
+            this.errors.customer.clear('address.local.street');
+            this.customer.address.local.city = this.customer.address.home.city;
+            this.errors.customer.clear('address.local.city');
+            this.customer.address.local.state = this.customer.address.home.state;
+            this.errors.customer.clear('address.local.state');
+            this.customer.address.local.zip = this.customer.address.home.zip;
+            this.errors.customer.clear('address.local.zip');
         }
     }
 });

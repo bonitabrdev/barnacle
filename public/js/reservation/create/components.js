@@ -23,6 +23,7 @@ Vue.component('barnacle-input-text', {
     methods: {
         updateValue: function(value) {
             this.errors.clear(this.name);
+
             this.$emit('input', value);
         }
     }
@@ -38,15 +39,24 @@ Vue.component('barnacle-input-phone', {
                 class="form-control"
                 v-bind:value="value"
                 v-on:input="updateValue($event.target.value)" />
+            <div
+                v-if="errors.has(name)"
+                class="alert alert-danger"
+                v-for="error in errors.get(name)">{{ error }}</div>
         </div>
     `,
     props: [
-        'value'
+        'value',
+        'errors',
+        'name'
     ],
     methods: {
         updateValue: function (value) {
             value = value.replace(/[^0-9]+/g, '');
             this.$refs.input.value = value;
+
+            this.errors.clear(this.name);
+
             this.$emit('input', value);
         }
     }
@@ -61,13 +71,21 @@ Vue.component('barnacle-input-date', {
                 class="form-control"
                 v-bind:value="value"
                 v-on:input="updateValue($event.target.value)" />
+            <div
+                v-if="errors.has(name)"
+                class="alert alert-danger"
+                v-for="error in errors.get(name)">{{ error }}</div>
         </div>
     `,
     props: [
-        'value'
+        'value',
+        'errors',
+        'name'
     ],
     methods: {
         updateValue: function(value) {
+            this.errors.clear(this.name);
+
             this.$emit('input', value);
         }
     }

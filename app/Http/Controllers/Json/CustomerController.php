@@ -17,6 +17,14 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name.last' => 'required',
+            'phone' => 'required'
+        ]);
+    }
+
+    public function old_store(Request $request)
+    {
         $responseData = [];
 
         $customer = new Customer;

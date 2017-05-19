@@ -18,21 +18,28 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name.first' => 'nullable|alpha',
-            'name.last' => 'required|alpha',
+            'first_name' => 'nullable|alpha',
+            'last_name' => 'required|alpha',
             'phone' => 'required|numeric',
             'dob' => 'nullable|date_format:Y-m-d',
-            'driversLicense' => 'nullable|alpha_dash',
+            'drivers_license' => 'nullable|alpha_dash',
             'email' => 'nullable|email',
-            'address.home.street' => 'required_with:address.home.city,address.home.state,address.home.zip,address.local.street,address.local.city,address.local.state,address.local.zip',
-            'address.home.city' => 'required_with:address.home.street,address.home.state,address.home.zip,address.local.street,address.local.city,address.local.state,address.local.zip',
-            'address.home.state' => 'required_with:address.home.street,address.home.city,address.home.zip,address.local.street,address.local.city,address.local.state,address.local.zip',
-            'address.home.zip' => 'required_with:address.home.street,address.home.city,address.home.state,address.local.street,address.local.city,address.local.state,address.local.zip',
-            'address.local.street' => 'required_with:address.local.city,address.local.state,address.local.zip,address.home.street,address.home.city,address.home.state,address.home.zip',
-            'address.local.city' => 'required_with:address.local.street,address.local.state,address.local.zip,address.home.street,address.home.city,address.home.state,address.home.zip',
-            'address.local.state' => 'required_with:address.local.street,address.local.city,address.local.zip,address.home.street,address.home.city,address.home.state,address.home.zip',
-            'address.local.zip' => 'required_with:address.local.street,address.local.city,address.local.state,address.home.street,address.home.city,address.home.state,address.home.zip'
+            'home_street' => 'required_with:home_city,home_state,home_zip,local_street,local_city,local_state,local_zip',
+            'home_city' => 'required_with:home_street,home_state,home_zip,local_street,local_city,local_state,local_zip',
+            'home_state' => 'required_with:home_street,home_city,home_zip,local_street,local_city,local_state,local_zip',
+            'home_zip' => 'required_with:home_street,home_city,home_state,local_street,local_city,local_state,local_zip',
+            'local_street' => 'required_with:local_city,local_state,local_zip,home_street,home_city,home_state,home_zip',
+            'local_city' => 'required_with:local_street,local_state,local_zip,home_street,home_city,home_state,home_zip',
+            'local_state' => 'required_with:local_street,local_city,local_zip,home_street,home_city,home_state,home_zip',
+            'local_zip' => 'required_with:local_street,local_city,local_state,home_street,home_city,home_state,home_zip'
         ]);
+    }
+
+    public function findByPhone(Request $request, $phone)
+    {
+        $customers = Customer::withPhone($phone)->get();
+
+        return $customers;
     }
 
     public function old_store(Request $request)

@@ -12,4 +12,9 @@ class Customer extends Model
     {
         return $this->hasMany('App\Reservation');
     }
+
+    public function scopeWithPhone($query, $phone)
+    {
+        return $query->where('phone', $phone);
+    }
 }

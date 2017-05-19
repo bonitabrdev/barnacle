@@ -8,7 +8,8 @@ Vue.component('barnacle-input-text', {
                 type="text"
                 class="form-control"
                 v-bind:value="value"
-                v-on:input="updateValue($event.target.value)" />
+                v-on:input="updateValue($event.target.value)"
+                v-bind:disabled="disabled" />
             <div
                 v-if="errors.has(name)"
                 class="alert alert-danger"
@@ -18,7 +19,8 @@ Vue.component('barnacle-input-text', {
     props: [
         'value',
         'errors',
-        'name'
+        'name',
+        'disabled'
     ],
     methods: {
         updateValue: function(value) {
@@ -38,7 +40,8 @@ Vue.component('barnacle-input-phone', {
                 type="text"
                 class="form-control"
                 v-bind:value="value"
-                v-on:input="updateValue($event.target.value)" />
+                v-on:input="updateValue($event.target.value)"
+                v-bind:disabled="disabled" />
             <div
                 v-if="errors.has(name)"
                 class="alert alert-danger"
@@ -48,7 +51,8 @@ Vue.component('barnacle-input-phone', {
     props: [
         'value',
         'errors',
-        'name'
+        'name',
+        'disabled'
     ],
     methods: {
         updateValue: function (value) {
@@ -70,7 +74,8 @@ Vue.component('barnacle-input-date', {
                 type="date"
                 class="form-control"
                 v-bind:value="value"
-                v-on:input="updateValue($event.target.value)" />
+                v-on:input="updateValue($event.target.value)"
+                v-bind:disabled="disabled" />
             <div
                 v-if="errors.has(name)"
                 class="alert alert-danger"
@@ -80,7 +85,8 @@ Vue.component('barnacle-input-date', {
     props: [
         'value',
         'errors',
-        'name'
+        'name',
+        'disabled'
     ],
     methods: {
         updateValue: function(value) {
@@ -94,7 +100,7 @@ Vue.component('barnacle-input-date', {
 Vue.component('barnacle-modal', {
     template: `
         <div class="modal" ref="modal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" v-on:click="closeClicked">&times;</button>

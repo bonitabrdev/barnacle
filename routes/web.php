@@ -18,6 +18,7 @@ Route::group(['prefix' => '/json', 'namespace' => 'Json', 'middleware' => 'auth'
     Route::get('/constraints/range/{first}/{last}', 'ConstraintController@getRange');
 
     Route::post('/customers', 'CustomerController@store');
+    Route::get('/customers/phone/{phone}', 'CustomerController@findByPhone');
 
     Route::post('/reservations/create/requests', 'CreateReservationRequestController@store');
     Route::get('/reservations/create/requests/{id}/status', 'CreateReservationRequestController@status');

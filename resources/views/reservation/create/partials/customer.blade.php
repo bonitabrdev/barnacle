@@ -1,59 +1,63 @@
-<barnacle-modal
-    title="Find Existing Customer"
-    v-bind:show="modals.findCustomer.show"
-    v-on:close="modals.findCustomer.show = false"
-    v-on:ok="modals.findCustomer.show = false">
-    <p>This is the find existing customer dialog.</p>
-</barnacle-modal>
+@include('reservation.create.partials.findcustomermodal')
 <div class="row">
     <div class="col-md-6">
         <h4>Customer Information</h4>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
         <button
             type="button"
             class="btn btn-default"
             v-on:click="modals.findCustomer.show = true">Use Existing Customer...</button>
     </div>
+    <div class="col-md-3" v-if="showUpdateExistingCustomer">
+        <input type="checkbox" v-model="options.updateExistingCustomer">
+        <label>Update Customer</label>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-3">
         <barnacle-input-text
-            v-model="customer.name.first"
+            v-model="customer.first_name"
             v-bind:errors="errors.customer"
-            name="name.first">First Name</barnacle-input-text>
+            name="first_name"
+            v-bind:disabled="disableFields">First Name</barnacle-input-text>
     </div>
     <div class="col-md-4">
         <barnacle-input-text
-            v-model="customer.name.last"
+            v-model="customer.last_name"
             v-bind:errors="errors.customer"
-            name="name.last">Last Name</barnacle-input-text>
+            name="last_name"
+            v-bind:disabled="disableFields">Last Name</barnacle-input-text>
     </div>
     <div class="col-md-2">
         <barnacle-input-phone
             v-model="customer.phone"
             v-bind:errors="errors.customer"
-            name="phone">Phone Number</barnacle-input-phone>
+            name="phone"
+            v-bind:disabled="disableFields">Phone Number</barnacle-input-phone>
     </div>
     <div class="col-md-3">
         <barnacle-input-date
             v-model="customer.dob"
             v-bind:errors="errors.customer"
-            name="dob">Date of Birth</barnacle-input-date>
+            name="dob"
+            v-bind:disabled="disableFields">Date of Birth</barnacle-input-date>
     </div>
 </div>
 <div class="row">
     <div class="col-md-3">
         <barnacle-input-text
-            v-model="customer.driversLicense"
+            v-model="customer.drivers_license"
             v-bind:errors="errors.customer"
-            name="driversLicense">Drivers License</barnacle-input-text>
+            name="drivers_license"
+            v-bind:disabled="disableFields">Drivers License</barnacle-input-text>
     </div>
     <div class="col-md-4">
         <barnacle-input-text
             v-model="customer.email"
             v-bind:errors="errors.customer"
-            name="email">E-mail Address</barnacle-input-text>
+            name="email"
+            v-bind:disabled="disableFields">E-mail Address</barnacle-input-text>
     </div>
 </div>
 <div class="row">
@@ -64,27 +68,31 @@
 <div class="row">
     <div class="col-md-4">
         <barnacle-input-text
-            v-model="customer.address.home.street"
+            v-model="customer.home_street"
             v-bind:errors="errors.customer"
-            name="address.home.street">Street</barnacle-input-text>
+            name="home_street"
+            v-bind:disabled="disableFields">Street</barnacle-input-text>
     </div>
     <div class="col-md-3">
         <barnacle-input-text
-            v-model="customer.address.home.city"
+            v-model="customer.home_city"
             v-bind:errors="errors.customer"
-            name="address.home.city">City</barnacle-input-text>
+            name="home_city"
+            v-bind:disabled="disableFields">City</barnacle-input-text>
     </div>
     <div class="col-md-2">
         <barnacle-input-text
-            v-model="customer.address.home.state"
+            v-model="customer.home_state"
             v-bind:errors="errors.customer"
-            name="address.home.state">State</barnacle-input-text>
+            name="home_state"
+            v-bind:disabled="disableFields">State</barnacle-input-text>
     </div>
     <div class="col-md-2">
         <barnacle-input-text
-            v-model="customer.address.home.zip"
+            v-model="customer.home_zip"
             v-bind:errors="errors.customer"
-            name="address.home.zip">Zip</barnacle-input-text>
+            name="home_zip"
+            v-bind:disabled="disableFields">Zip</barnacle-input-text>
     </div>
 </div>
 <div class="row">
@@ -92,32 +100,36 @@
         <h5>Local Address</h5>
     </div>
     <div class="col-md-6">
-        <button type="button" class="btn btn-default" v-on:click="copyHomeToLocal">Copy Home Address</button>
+        <button type="button" class="btn btn-default" v-on:click="copyHomeToLocal" v-bind:disabled="disableFields">Copy Home Address</button>
     </div>
 </div>
 <div class="row">
     <div class="col-md-4">
         <barnacle-input-text
-            v-model="customer.address.local.street"
+            v-model="customer.local_street"
             v-bind:errors="errors.customer"
-            name="address.local.street">Street</barnacle-input-text>
+            name="local_street"
+            v-bind:disabled="disableFields">Street</barnacle-input-text>
     </div>
     <div class="col-md-3">
         <barnacle-input-text
-            v-model="customer.address.local.city"
+            v-model="customer.local_city"
             v-bind:errors="errors.customer"
-            name="address.local.city">City</barnacle-input-text>
+            name="local_city"
+            v-bind:disabled="disableFields">City</barnacle-input-text>
     </div>
     <div class="col-md-2">
         <barnacle-input-text
-            v-model="customer.address.local.state"
+            v-model="customer.local_state"
             v-bind:errors="errors.customer"
-            name="address.local.state">State</barnacle-input-text>
+            name="local_state"
+            v-bind:disabled="disableFields">State</barnacle-input-text>
     </div>
     <div class="col-md-2">
         <barnacle-input-text
-            v-model="customer.address.local.zip"
+            v-model="customer.local_zip"
             v-bind:errors="errors.customer"
-            name="address.local.zip">Zip Code</barnacle-input-text>
+            name="local_zip"
+            v-bind:disabled="disableFields">Zip Code</barnacle-input-text>
     </div>
 </div>

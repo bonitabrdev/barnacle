@@ -19,6 +19,9 @@ Route::group(['prefix' => '/json', 'namespace' => 'Json', 'middleware' => 'auth'
 
     Route::post('/customers', 'CustomerController@store');
     Route::get('/customers/phone/{phone}', 'CustomerController@findByPhone');
+    Route::put('/customers/{id}', 'CustomerController@update');
+
+    Route::post('/reservations', 'ReservationController@store');
 
     Route::post('/reservations/create/requests', 'CreateReservationRequestController@store');
     Route::get('/reservations/create/requests/{id}/status', 'CreateReservationRequestController@status');

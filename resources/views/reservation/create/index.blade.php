@@ -16,6 +16,7 @@
         </div>
     </div>
     @include('reservation.create.partials.reservation')
+    <barnacle-warnings v-bind:warnings="warnings" v-on:dismiss="warnings.splice($event.index, 1)"></barnacle-warnings>
     <div class="row">
         <div class="col-md-12">
             <hr />

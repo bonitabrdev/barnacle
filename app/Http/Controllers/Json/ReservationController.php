@@ -15,8 +15,8 @@ class ReservationController extends Controller
 
     }
 
-    public function createReservationRequest(Request $request)
+    public function store(Request $request)
     {
-
+        
     }
 }

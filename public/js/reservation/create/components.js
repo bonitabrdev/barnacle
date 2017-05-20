@@ -11,21 +11,26 @@ Vue.component('barnacle-input-text', {
                 v-on:input="updateValue($event.target.value)"
                 v-bind:disabled="disabled" />
             <div
-                v-if="errors.has(name)"
+                v-if="errors.length > 0"
                 class="alert alert-danger"
-                v-for="error in errors.get(name)">{{ error }}</div>
+                v-for="error in errors">{{ error }}</div>
         </div>
     `,
-    props: [
-        'value',
-        'errors',
-        'name',
-        'disabled'
-    ],
+    props: {
+        value: null,
+        errors: {
+            type: Array,
+            default: function () {
+                return [];
+            }
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
     methods: {
         updateValue: function(value) {
-            this.errors.clear(this.name);
-
             this.$emit('input', value);
         }
     }
@@ -43,24 +48,65 @@ Vue.component('barnacle-input-phone', {
                 v-on:input="updateValue($event.target.value)"
                 v-bind:disabled="disabled" />
             <div
-                v-if="errors.has(name)"
+                v-if="errors.length > 0"
                 class="alert alert-danger"
-                v-for="error in errors.get(name)">{{ error }}</div>
+                v-for="error in errors">{{ error }}</div>
         </div>
     `,
-    props: [
-        'value',
-        'errors',
-        'name',
-        'disabled'
-    ],
+    props: {
+        value: null,
+        errors: {
+            type: Array,
+            default: function () {
+                return [];
+            }
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
     methods: {
         updateValue: function (value) {
             value = value.replace(/[^0-9]+/g, '');
             this.$refs.input.value = value;
 
-            this.errors.clear(this.name);
+            this.$emit('input', value);
+        }
+    }
+});
 
+Vue.component('barnacle-input-time', {
+    template: `
+        <div class="form-group">
+            <label><slot></slot></label>
+            <input
+                type="time"
+                class="form-control"
+                v-bind:value="value"
+                v-on:input="updateValue($event.target.value)"
+                v-bind:disabled="disabled" />
+            <div
+                v-if="errors.length > 0"
+                class="alert alert-danger"
+                v-for="error in errors">{{ error }}</div>
+        </div>
+    `,
+    props: {
+        value: null,
+        errors: {
+            type: Array,
+            default: function () {
+                return [];
+            }
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
+    methods: {
+        updateValue: function(value) {
             this.$emit('input', value);
         }
     }
@@ -77,21 +123,26 @@ Vue.component('barnacle-input-date', {
                 v-on:input="updateValue($event.target.value)"
                 v-bind:disabled="disabled" />
             <div
-                v-if="errors.has(name)"
+                v-if="errors.length > 0"
                 class="alert alert-danger"
-                v-for="error in errors.get(name)">{{ error }}</div>
+                v-for="error in errors">{{ error }}</div>
         </div>
     `,
-    props: [
-        'value',
-        'errors',
-        'name',
-        'disabled'
-    ],
+    props: {
+        value: null,
+        errors: {
+            type: Array,
+            default: function () {
+                return [];
+            }
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        }
+    },
     methods: {
         updateValue: function(value) {
-            this.errors.clear(this.name);
-
             this.$emit('input', value);
         }
     }
@@ -109,10 +160,6 @@ Vue.component('barnacle-modal', {
                     <div class="modal-body">
                         <slot></slot>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" v-on:click="closeClicked">Close</button>
-                        <button type="button" class="btn btn-primary" v-on:click="okClicked">OK</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -124,9 +171,6 @@ Vue.component('barnacle-modal', {
     methods: {
         closeClicked: function(event) {
             this.$emit('close');
-        },
-        okClicked: function(event) {
-            this.$emit('ok');
         }
     },
     mounted: function () {
@@ -143,6 +187,30 @@ Vue.component('barnacle-modal', {
             } else {
                 $(this.$refs.modal).modal('hide');
             }
+        }
+    }
+});
+
+Vue.component('barnacle-warnings', {
+    template: `
+        <div class="row" v-if="warnings.length > 0">
+            <div class="col-md-offset-1 col-md-10">
+                <div v-for="(warning, index) in warnings" class="alert alert-danger">
+                    <button type="button" class="close" v-on:click="dismissWarning(index)">&times;</button>
+                    {{ warning }}
+                </div>
+            </div>
+        </div>
+    `,
+    props: {
+        warnings: {
+            type: Array,
+            required: true
+        }
+    },
+    methods: {
+        dismissWarning: function (index) {
+            this.$emit('dismiss', {index: index});
         }
     }
 });

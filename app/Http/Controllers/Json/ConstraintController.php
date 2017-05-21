@@ -14,7 +14,7 @@ class ConstraintController extends Controller
 {
     public function __construct()
     {
-        
+
     }
 
     public function getByDate(Request $request, $year, $month, $day)
@@ -30,9 +30,9 @@ class ConstraintController extends Controller
         } else {
             $constraint = $constraints->first();
             $responseData['id'] = $constraint->id;
-            $responseData['date'] = $constraint->date->toDateString();
-            $responseData['start'] = $constraint->start->toTimeString();
-            $responseData['end'] = $constraint->end->toTimeString();
+            $responseData['date'] = $constraint->date;
+            $responseData['start'] = $constraint->start;
+            $responseData['end'] = $constraint->end;
             $responseData['data'] = $constraint->data;
             return response()->json($responseData, 200);
         }
@@ -136,9 +136,9 @@ class ConstraintController extends Controller
         foreach ($constraints as $constraint) {
             $responseData['constraints'][] = [
                 'id' => $constraint->id,
-                'date' => $constraint->date->toDateString(),
-                'start' => $constraint->start->toTimeString(),
-                'end' => $constraint->end->toTimeString(),
+                'date' => $constraint->date,
+                'start' => $constraint->start,
+                'end' => $constraint->end,
                 'data' => $constraint->data
             ];
         }

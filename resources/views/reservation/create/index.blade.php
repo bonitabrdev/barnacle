@@ -9,6 +9,7 @@
 
 @section('body')
 <div id="create_reservation">
+    @include('reservation.create.partials.processingmodal')
     @include('reservation.create.partials.customer')
     <div class="row">
         <div class="col-md-12">

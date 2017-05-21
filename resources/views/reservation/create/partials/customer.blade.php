@@ -1,5 +1,4 @@
 @include('reservation.create.partials.findcustomermodal')
-@include('reservation.create.partials.processingmodal')
 <div class="row">
     <div class="col-md-6">
         <h4>Customer Information</h4>

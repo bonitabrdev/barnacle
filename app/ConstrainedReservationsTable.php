@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 
 use App\Reservation;
+use App\Constraint;
 
 /**
  * ConstrainedReservationsTable
@@ -18,10 +19,12 @@ class ConstrainedReservationsTable
     protected $end;
     protected $table;
 
-    public function __construct(Carbon $start, Carbon $end, array $types)
+    public function __construct(Constraint $constraint)
     {
-        $this->start = $start->copy();
-        $this->end = $end->copy();
+        $this->start = $constraint->start;
+        $this->end = $constraint->end;
+
+        $types = $constraint->data;
 
         $this->table = [];
 
@@ -35,22 +38,22 @@ class ConstrainedReservationsTable
 
     public function insert(Reservation $newReservation)
     {
-        if ($newReservation->start->lt($this->start)) {
-            return FALSE;
+        if ($newReservation->start < $this->start) {
+            return false;
         }
-        if ($newReservation->end->gt($this->end)) {
-            return FALSE;
+        if ($newReservation->end > $this->end) {
+            return false;
         }
 
         $type = $newReservation->type;
 
         foreach ($this->table[$type] as &$row) {
             if ($this->insertIntoRow($newReservation, $row)) {
-                return TRUE;
+                return true;
             }
         }
 
-        return FALSE;
+        return false;
     }
 
     protected function insertIntoRow(Reservation $newReservation, &$row)
@@ -58,23 +61,23 @@ class ConstrainedReservationsTable
         if ($row->isNotEmpty()) {
             foreach ($row as $reservation) {
                 // will the new reservation fit before the current reservation?
-                if ($newReservation->end->lte($reservation->start)) {
+                if ($newReservation->end <= $reservation->start) {
                     break;
                 }
                 // will the new reservation fit after the current reservation?
-                if ($newReservation->start->gte($reservation->end)) {
+                if ($newReservation->start >= $reservation->end) {
                     continue;
                 } else {
-                    return FALSE;
+                    return false;
                 }
             }
         }
 
         $row->push($newReservation);
         $row = $row->sortBy(function ($reservation, $key) {
-            return $reservation->start->toTimeString();
+            return $reservation->start;
         })->values();
 
-        return TRUE;
+        return true;
     }
 }

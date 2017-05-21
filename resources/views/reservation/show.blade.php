@@ -77,13 +77,13 @@
 </div>
 <div class="row">
     <div class="col-md-4">
-        <p><strong>Reserved Date:</strong> {{ $reservation->reserved_date->toDateString() }}</p>
+        <p><strong>Reserved Date:</strong> {{ $reservation->reserved_date }}</p>
     </div>
     <div class="col-md-4">
-        <p><strong>Start Time:</strong> {{ $reservation->start->toTimeString() }}</p>
+        <p><strong>Start Time:</strong> {{ $reservation->start }}</p>
     </div>
     <div class="col-md-4">
-        <p><strong>End Time:</strong> {{ $reservation->end->toTimeString() }}</p>
+        <p><strong>End Time:</strong> {{ $reservation->end }}</p>
     </div>
 </div>
 <div class="row">

@@ -164,10 +164,16 @@ Vue.component('barnacle-modal', {
             </div>
         </div>
     `,
-    props: [
-        'show',
-        'title'
-    ],
+    props: {
+        show: {
+            type: Boolean,
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        }
+    },
     methods: {
         closeClicked: function(event) {
             this.$emit('close');

@@ -3,64 +3,53 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
 use Carbon\Carbon;
 
 class Reservation extends Model
 {
-    //
-
     public function customer()
     {
         return $this->belongsTo('App\Customer');
     }
 
-    public function getReservedDateAttribute($value)
+    public function constraint()
     {
-        $date = Carbon::parse($value);
-        $date->hour = 0;
-        $date->minute = 0;
-        $date->second = 0;
-        return $date;
+        return $this->belongsTo('App\Constraint', 'reserved_date', 'date');
     }
 
     public function setReservedDateAttribute($value)
     {
-        $this->attributes['reserved_date'] = $value->toDateString();
-    }
+        if ($value instanceof Carbon) {
+            $value = $value->toDateString();
+        }
 
-    public function getStartAttribute($value)
-    {
-        $time = Carbon::parse($value);
-        $date = $this->reserved_date;
-        $time->year = $date->year;
-        $time->month = $date->month;
-        $time->day = $date->day;
-        return $time;
+        $this->attributes['reserved_date'] = $value;
     }
 
     public function setStartAttribute($value)
     {
-        $this->attributes['start'] = $value->toTimeString();
-    }
+        if ($value instanceof Carbon) {
+            $value = $value->toTimeString();
+        }
 
-    public function getEndAttribute($value)
-    {
-        $time = Carbon::parse($value);
-        $date = $this->reserved_date;
-        $time->year = $date->year;
-        $time->month = $date->month;
-        $time->day = $date->day;
-        return $time;
+        $this->attributes['start'] = $value;
     }
 
     public function setEndAttribute($value)
     {
-        $this->attributes['end'] = $value->toTimeString();
+        if ($value instanceof Carbon) {
+            $value = $value->toTimeString();
+        }
+
+        $this->attributes['end'] = $value;
     }
 
     public function scopeWithReservedDate($query, $date)
     {
-        return $query->where('reserved_date', $date->toDateString());
+        if ($date instanceof Carbon) {
+            $date = $date->toDateString();
+        }
+
+        return $query->where('reserved_date', $date);
     }
 }

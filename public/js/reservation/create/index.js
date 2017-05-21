@@ -21,6 +21,7 @@ var vmCreateReservation = new Vue({
             local_zip: ''
         },
         reservation: {
+            id: null,
             customer_id: null,
             reserved_date: (new Date(Date.now())).toISOString().split('T')[0],
             start: '09:00:00',
@@ -88,6 +89,7 @@ var vmCreateReservation = new Vue({
                         this.createReservation()
                             .then(response => {
                                 // the reservation was successfully created
+                                window.location = '/reservations/' + this.reservation.id;
                             }).catch(error => {
                                 this.modals.processing.show = false;
                             });
@@ -101,6 +103,7 @@ var vmCreateReservation = new Vue({
                             this.createReservation()
                                 .then(response => {
                                     // the reservation was successfully created
+                                    window.location = '/reservations/' + this.reservation.id;
                                 }).catch(error => {
                                     this.modals.processing.show = false;
                                 });
@@ -111,6 +114,7 @@ var vmCreateReservation = new Vue({
                     this.createReservation()
                         .then(response => {
                             // the reservation was successfully created
+                            window.location = '/reservations/' + this.reservation.id;
                         }).catch(error => {
                             this.modals.processing.show = false;
                         });
@@ -118,7 +122,7 @@ var vmCreateReservation = new Vue({
             }
         },
         createCustomer: function () {
-            return new Promise ((resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 axios.post('/json/customers', this.customer)
                     .then(response => {
                         console.log(response.data);
@@ -128,7 +132,7 @@ var vmCreateReservation = new Vue({
                         console.log(error);
                         console.log(error.response);
                         console.log(error.response.data);
-                        for (field in error.response.data) {
+                        for (let field in error.response.data) {
                             this.errors.customer[field] = error.response.data[field];
                         }
                         reject(error);
@@ -144,7 +148,7 @@ var vmCreateReservation = new Vue({
                         resolve(response);
                     }).catch(error => {
                         console.log(error.response.data);
-                        for (field in error.response.data) {
+                        for (let field in error.response.data) {
                             this.errors.customer[field] = error.response.data[field];
                         }
                         reject(error);
@@ -164,8 +168,11 @@ var vmCreateReservation = new Vue({
                         console.log(error.response.data);
                         if (error.response.status == 409) {
                             // conflict error
+                            for (let warning in error.response.data.warnings) {
+                                this.warnings.push(error.response.data.warnings[warning]);
+                            }
                         } else {
-                            for (field in error.response.data) {
+                            for (let field in error.response.data) {
                                 this.errors.reservation[field] = error.response.data[field];
                             }
                         }

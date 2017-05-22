@@ -2,9 +2,6 @@
 
 namespace App;
 
-use App\Constraint;
-use App\Reservation;
-use App\ConstrainedReservationsTable;
 use Illuminate\Support\Facades\DB;
 
 class ReservationRepository

@@ -2,11 +2,6 @@
 
 namespace App;
 
-use Carbon\Carbon;
-
-use App\Reservation;
-use App\Constraint;
-
 /**
  * ConstrainedReservationsTable
  *

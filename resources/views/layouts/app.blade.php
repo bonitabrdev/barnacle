@@ -12,7 +12,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/jquery-ui.css') }}" rel="stylesheet" />
 
     <!-- Scripts -->
     <script>
@@ -29,8 +28,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/jquery-ui.js') }}"></script>
-    <script src="{{ asset('js/jqueryui-bootstrap-adapter.js') }}"></script>
     <!-- footer_scripts stack -->
     @stack('footer_scripts')
 </body>

@@ -81,6 +81,7 @@ Vue.component('barnacle-input-time', {
         <div class="form-group">
             <label><slot></slot></label>
             <input
+                ref="input"
                 type="time"
                 class="form-control"
                 v-bind:value="value"
@@ -107,6 +108,12 @@ Vue.component('barnacle-input-time', {
     },
     methods: {
         updateValue: function(value) {
+            // check if seconds are missing, if so, add them
+            if (value.split(':').length < 3) {
+                value += ':00';
+                this.$refs.input.value = value;
+            }
+            
             this.$emit('input', value);
         }
     }

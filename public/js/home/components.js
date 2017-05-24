@@ -90,7 +90,11 @@ Vue.component('barnacle-reservations-table-slot', {
                     {{ slotdata.reservation.start }}-{{ slotdata.reservation.end }}
                 </div>
                 <div style="width:100%; height:50%; text-align:center">
-                    <strong>{{ slotdata.reservation.customer.last_name }}</strong>
+                    <strong>
+                        <a style="text-decoration:none;" v-bind:href="'/reservations/' + slotdata.reservation.id">
+                            {{ slotdata.reservation.customer.last_name }}
+                        </a> - {{ slotdata.reservation.num_people }}
+                    </strong>
                 </div>
             </template>
         </div>

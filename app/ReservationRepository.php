@@ -24,4 +24,16 @@ class ReservationRepository
             }
         });
     }
+
+    public static function getTable($date)
+    {
+        $constraint = Constraint::withDate($date)->get()->first();
+        $table = new ConstrainedReservationsTable($constraint);
+
+        foreach ($constraint->reservations as $reservation) {
+            $table->insert($reservation);
+        }
+
+        return $table->buildTable();
+    }
 }

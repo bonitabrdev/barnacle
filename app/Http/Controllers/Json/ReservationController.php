@@ -42,4 +42,9 @@ class ReservationController extends Controller
             ], 409);
         }
     }
+
+    public function getTable(Request $request, $date)
+    {
+        return ReservationRepository::getTable($date);
+    }
 }

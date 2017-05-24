@@ -22,6 +22,7 @@ Route::group(['prefix' => '/json', 'namespace' => 'Json', 'middleware' => 'auth'
     Route::put('/customers/{id}', 'CustomerController@update');
 
     Route::post('/reservations', 'ReservationController@store');
+    Route::get('/reservations/table/{date}', 'ReservationController@getTable');
 });
 
 Route::group(['prefix' => '/reservations', 'middleware' => 'auth'], function () {

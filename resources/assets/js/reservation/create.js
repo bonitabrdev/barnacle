@@ -101,13 +101,10 @@ new Vue({
             if (this.customer.id === null) {
                 this.createCustomer()
                     .then(response => {
-                        this.createReservation()
-                            .then(response => {
-                                // the reservation was successfully created
-                                window.location = '/reservations/' + this.reservation.id;
-                            }).catch(error => {
-                                this.modals.processing.show = false;
-                            });
+                        return this.createReservation();
+                    }).then(response => {
+                        // the reservation was successfully created
+                        window.location = '/reservations/' + this.reservation.id;
                     }).catch(error => {
                         this.modals.processing.show = false;
                     });
@@ -115,16 +112,14 @@ new Vue({
                 if (this.options.updateExistingCustomer) {
                     this.updateCustomer()
                         .then(response => {
-                            this.createReservation()
-                                .then(response => {
-                                    // the reservation was successfully created
-                                    window.location = '/reservations/' + this.reservation.id;
-                                }).catch(error => {
-                                    this.modals.processing.show = false;
-                                });
-                        }).catch(error => {
+                            return this.createReservation();
+                        })
+                        .then(response => {
+                            window.location = '/reservations/' + this.reservation.id;
+                        })
+                        .catch(error => {
                             this.modals.processing.show = false;
-                        });
+                        })
                 } else {
                     this.createReservation()
                         .then(response => {
@@ -137,63 +132,57 @@ new Vue({
             }
         },
         createCustomer: function () {
-            return new Promise((resolve, reject) => {
-                axios.post('/json/customers', this.customer)
-                    .then(response => {
-                        console.log(response.data);
-                        this.customer = response.data;
-                        resolve(response);
-                    }).catch(error => {
-                        console.log(error);
-                        console.log(error.response);
-                        console.log(error.response.data);
-                        for (let field in error.response.data) {
-                            this.errors.customer[field] = error.response.data[field];
-                        }
-                        reject(error);
-                    });
-            });
+            return axios.post('/json/customers', this.customer)
+                .then(response => {
+                    console.log(response.data);
+                    this.customer = response.data;
+                    return response;
+                }).catch(error => {
+                    console.log(error);
+                    console.log(error.response);
+                    console.log(error.response.data);
+                    for (let field in error.response.data) {
+                        this.errors.customer[field] = error.response.data[field];
+                    }
+                    throw error;
+                });
         },
         updateCustomer: function () {
-            return new Promise((resolve, reject) => {
-                axios.put('/json/customers/' + this.customer.id, this.customer)
-                    .then(response => {
-                        console.log(response.data);
-                        this.customer = response.data;
-                        resolve(response);
-                    }).catch(error => {
-                        console.log(error.response.data);
-                        for (let field in error.response.data) {
-                            this.errors.customer[field] = error.response.data[field];
-                        }
-                        reject(error);
-                    });
-            });
+            return axios.put('/json/customers/' + this.customer.id, this.customer)
+                .then(response => {
+                    console.log(response.data);
+                    this.customer = response.data;
+                    return response;
+                }).catch(error => {
+                    console.log(error.response.data);
+                    for (let field in error.response.data) {
+                        this.errors.customer[field] = error.response.data[field];
+                    }
+                    throw error;
+                });
         },
         createReservation: function () {
             this.reservation.customer_id = this.customer.id;
 
-            return new Promise((resolve, reject) => {
-                axios.post('/json/reservations', this.reservation)
-                    .then(response => {
-                        console.log(response.data);
-                        this.reservation = response.data;
-                        resolve(response);
-                    }).catch(error => {
-                        console.log(error.response.data);
-                        if (error.response.status == 409) {
-                            // conflict error
-                            for (let warning in error.response.data.warnings) {
-                                this.warnings.push(error.response.data.warnings[warning]);
-                            }
-                        } else {
-                            for (let field in error.response.data) {
-                                this.errors.reservation[field] = error.response.data[field];
-                            }
+            return axios.post('/json/reservations', this.reservation)
+                .then(response => {
+                    console.log(response.data);
+                    this.reservation = response.data;
+                    return response;
+                }).catch(error => {
+                    console.log(error.response.data);
+                    if (error.response.status == 409) {
+                        // conflict error
+                        for (let warning in error.response.data.warnings) {
+                            this.warnings.push(error.response.data.warnings[warning]);
                         }
-                        reject(error);
-                    });
-            });
+                    } else {
+                        for (let field in error.response.data) {
+                            this.errors.reservation[field] = error.response.data[field];
+                        }
+                    }
+                    throw error;
+                });
         },
         copyHomeToLocal: function () {
             this.customer.local_street = this.customer.home_street;

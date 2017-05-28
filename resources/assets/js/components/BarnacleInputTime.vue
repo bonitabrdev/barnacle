@@ -1,6 +1,6 @@
 <template>
     <div class="form-group">
-        <label><slot></slot></label>
+        <label v-if="$slots.hasOwnProperty('default')"><slot></slot></label>
         <input
             ref="input"
             type="time"

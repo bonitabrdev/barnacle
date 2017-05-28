@@ -1,6 +1,6 @@
 // js/admin/constraints/show.js
 
-var vmShowConstraints = new Vue({
+export default new Vue({
     el: '#show_constraints',
     data: {
         first: (new Date(Date.now())).toISOString().split('T')[0],

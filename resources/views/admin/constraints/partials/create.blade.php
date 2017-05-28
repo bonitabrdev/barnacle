@@ -1,7 +1,3 @@
-@push('footer_scripts')
-    <script type="text/javascript" src="{{ asset('js/admin/constraints/create.js') }}"></script>
-@endpush
-
 <div id="create_constraints">
     <div class="row">
         <div class="col-md-12">

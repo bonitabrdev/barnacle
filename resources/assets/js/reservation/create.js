@@ -1,6 +1,13 @@
-// js/reservation/create/index.js
+// js/reservation/create.js
 
-var vmCreateReservation = new Vue({
+import BarnacleInputDate from '../components/BarnacleInputDate.vue';
+import BarnacleInputPhone from '../components/BarnacleInputPhone.vue';
+import BarnacleInputText from '../components/BarnacleInputText.vue';
+import BarnacleInputTime from '../components/BarnacleInputTime.vue';
+import BarnacleModal from '../components/BarnacleModal.vue';
+import BarnacleWarnings from '../components/BarnacleWarnings.vue';
+
+new Vue({
     el: '#create_reservation',
     data: {
         customer: {
@@ -78,6 +85,14 @@ var vmCreateReservation = new Vue({
         disableFields: function () {
             return this.showUpdateExistingCustomer && !this.options.updateExistingCustomer;
         }
+    },
+    components: {
+        BarnacleInputDate,
+        BarnacleInputPhone,
+        BarnacleInputText,
+        BarnacleInputTime,
+        BarnacleModal,
+        BarnacleWarnings
     },
     methods: {
         submitReservation: function (event) {

@@ -1,10 +1,17 @@
-// js/home/index.js
+// js/home.js
 
-vmDashboard = new Vue({
+import BarnacleInputDate from './components/BarnacleInputDate.vue';
+import BarnacleReservationsTable from './components/BarnacleReservationsTable.vue';
+
+new Vue({
     el: '#dashboard',
     data: {
         date: (new Date()).toISOString().split('T')[0],
         tables: null
+    },
+    components: {
+        BarnacleInputDate,
+        BarnacleReservationsTable
     },
     mounted: function () {
         this.fetchTables();

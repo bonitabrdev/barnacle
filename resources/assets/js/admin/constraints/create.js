@@ -1,6 +1,6 @@
 // js/admin/constraints/create.js
 
-var vmCreateConstraints = new Vue({
+export default new Vue({
     el: '#create_constraints',
     data: {
         first: (new Date(Date.now())).toISOString().split('T')[0],

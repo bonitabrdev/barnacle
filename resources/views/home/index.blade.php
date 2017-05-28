@@ -1,8 +1,7 @@
 @extends('layouts.base')
 
 @push('footer_scripts')
-<script type="text/javascript" src="{{ asset('js/home/components.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/home/index.js') }}"></script>
+<script type="text/javascript" src="{{ mix('js/home.js') }}"></script>
 @endpush
 
 @section('heading', 'Dashboard')
@@ -22,7 +21,8 @@
             <barnacle-reservations-table
                 v-if="tables !== null"
                 v-for="(table, key) in tables"
-                v-bind:table="table"><h4>@{{ key }}</h4></barnacle-reservations-table>
+                v-bind:table="table"
+                v-bind:key="key"><h4>@{{ key }}</h4></barnacle-reservations-table>
         </div>
     </div>
 </div>

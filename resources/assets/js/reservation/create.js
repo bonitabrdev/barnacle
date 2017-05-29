@@ -96,42 +96,25 @@ new Vue({
     },
     methods: {
         submitReservation: function (event) {
-            this.modals.processing.show = true;
-
-            if (this.customer.id === null) {
-                this.createCustomer()
-                    .then(response => {
-                        return this.createReservation();
-                    }).then(response => {
-                        // the reservation was successfully created
-                        window.location = '/reservations/' + this.reservation.id;
-                    }).catch(error => {
-                        this.modals.processing.show = false;
-                    });
-            } else {
-                if (this.options.updateExistingCustomer) {
-                    this.updateCustomer()
-                        .then(response => {
-                            return this.createReservation();
-                        })
-                        .then(response => {
-                            window.location = '/reservations/' + this.reservation.id;
-                        })
-                        .catch(error => {
-                            this.modals.processing.show = false;
-                        })
-                } else {
-                    this.createReservation()
-                        .then(response => {
-                            // the reservation was successfully created
-                            window.location = '/reservations/' + this.reservation.id;
-                        }).catch(error => {
-                            this.modals.processing.show = false;
-                        });
-                }
-            }
+            Promise.resolve()
+                .then(() => {
+                    this.modals.processing.show = true;
+                }).then(() => {
+                    if (this.customer.id === null) {
+                        return this.createCustomer();
+                    } else if (this.options.updateExistingCustomer) {
+                        return this.updateCustomer();
+                    }
+                }).then(() => {
+                    return this.createReservation();
+                }).then(() => {
+                    window.location = '/reservations/' + this.reservation.id;
+                }).catch(error => {
+                    this.modals.processing.show = false;
+                });
         },
         createCustomer: function () {
+            console.log('Called createCustomer()');
             return axios.post('/json/customers', this.customer)
                 .then(response => {
                     console.log(response.data);
@@ -148,6 +131,7 @@ new Vue({
                 });
         },
         updateCustomer: function () {
+            console.log('Called updateCustomer()');
             return axios.put('/json/customers/' + this.customer.id, this.customer)
                 .then(response => {
                     console.log(response.data);
@@ -162,6 +146,7 @@ new Vue({
                 });
         },
         createReservation: function () {
+            console.log('Called createReservation()');
             this.reservation.customer_id = this.customer.id;
 
             return axios.post('/json/reservations', this.reservation)
